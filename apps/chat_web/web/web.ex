@@ -18,21 +18,13 @@ defmodule ChatWeb.Web do
 
   def model do
     quote do
-      use Ecto.Schema
-
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
+      # Define common model functionality
     end
   end
 
   def controller do
     quote do
       use Phoenix.Controller
-
-      alias ChatWeb.Repo
-      import Ecto
-      import Ecto.Query
 
       import ChatWeb.Router.Helpers
       import ChatWeb.Gettext
@@ -64,10 +56,6 @@ defmodule ChatWeb.Web do
   def channel do
     quote do
       use Phoenix.Channel
-
-      alias ChatWeb.Repo
-      import Ecto
-      import Ecto.Query
       import ChatWeb.Gettext
     end
   end

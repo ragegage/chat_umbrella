@@ -5,14 +5,10 @@
 # is restricted to this project.
 use Mix.Config
 
-# General application configuration
-config :chat_web,
-  ecto_repos: [ChatWeb.Repo]
-
 # Configures the endpoint
 config :chat_web, ChatWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "QtgylF7D5jKn5nJb5886CEHU4M0bBhXcy0fmXBPPDV3l3zyVxs60ukz5evyOUhTo",
+  secret_key_base: "REaiFm60L5WLRshOJOGwTLhT0eRJgqoq+IezkrU5cjqlbOfYcb+L6U6557roHMRv",
   render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: ChatWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]

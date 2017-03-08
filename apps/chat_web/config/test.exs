@@ -8,12 +8,3 @@ config :chat_web, ChatWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :chat_web, ChatWeb.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "chat_web_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
