@@ -1,1 +1,3 @@
-<div><%= @content %>, from <%= @username %></div>
+<ul id='chat-list'>
+</ul>
+<input id='chat-input'/>
