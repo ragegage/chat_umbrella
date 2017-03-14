@@ -56,32 +56,52 @@ socket.connect()
 // Now that you are connected, you can join channels with a topic:
 let channel = socket.channel("room:lobby", {})
 
-let chatInput = document.querySelector("#chat-input") 
+let chatInput = document.querySelector("#chat-input")
 let messagesContainer = document.querySelector("#chat-list")
+let roomInput = document.querySelector("#room-input")
+
+let loadMessages = resp => { 
+  console.log("Joined successfully", resp) 
+  // clear out message container ul
+  messagesContainer.innerHTML = ''
+  // put messages (previous messages in the channel) into the ul
+  resp.forEach(msg => {
+    let messageItem = document.createElement("li");
+    messageItem.innerText = `${msg.content}`
+    messagesContainer.appendChild(messageItem)
+  })
+}
+
+let joinChannel = channel => {
+  channel.join()
+    .receive("ok", loadMessages)
+    .receive("error", resp => { console.log("Unable to join", resp) })
+}
 
 chatInput.addEventListener("keypress", event => { 
-  if(event.keyCode === 13){ 
+  if(event.keyCode === 13){
     channel.push("new_msg", {body: chatInput.value}) 
     chatInput.value = "" 
-  } 
+  }
 })
 
-channel.on("new_msg", payload => { 
-  let messageItem = document.createElement("li"); 
-  messageItem.innerText = `${payload.body} `
-  messagesContainer.appendChild(messageItem) 
-})
-
-channel.join()
-  .receive("ok", resp => { 
-    console.log("Joined successfully", resp) 
-    // put messages (previous messages in the channel) into the ul
-    resp.forEach(msg => {
-      let messageItem = document.createElement("li");
-      messageItem.innerText = `${msg.content}`
-      messagesContainer.appendChild(messageItem)
-    })
+let channelOnMessage = channel => {
+  channel.on("new_msg", payload => { 
+    let messageItem = document.createElement("li"); 
+    messageItem.innerText = `${payload.body} `
+    messagesContainer.appendChild(messageItem)
   })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+}
+
+roomInput.addEventListener("keypress", event => { 
+  if(event.keyCode === 13){
+    channel = socket.channel(`room:${roomInput.value}`, {})
+    joinChannel(channel)
+    channelOnMessage(channel)
+  }
+})
+
+joinChannel(channel)
+channelOnMessage(channel)
 
 export default socket

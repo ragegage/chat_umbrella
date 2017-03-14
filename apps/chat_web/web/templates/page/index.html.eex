@@ -1,3 +1,5 @@
+<label>chat room:<input id='room-input' placeholder='room name' value='lobby' />
+
 <ul id='chat-list'>
 </ul>
 <input id='chat-input' placeholder='chat...' />
