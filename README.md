@@ -35,3 +35,9 @@ their own chat rooms named whatever they want.
 To do this, we'll need a way for users of our web app to input a chat
 room name, and tell our server to let people join whatever room they
 want.
+
+## TODO: Display list of rooms
+
+Next, let's keep a list of rooms on the page at all times. A room will get added to the list once the user has joined it.
+
+## TODO: Display list of online users (using Presence)
