@@ -41,3 +41,5 @@ want.
 Next, let's keep a list of rooms on the page at all times. A room will get added to the list once the user has joined it.
 
 ## TODO: Display list of online users (using Presence)
+
+## TODO: Track idle-ness of online users (??)
