@@ -1,1 +1,10 @@
 /* This file is for your main application css. */
+main {
+  display: flex;
+}
+aside {
+  width: 220px;
+}
+aside input {
+  width: 120px;
+}
