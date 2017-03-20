@@ -59,9 +59,10 @@ let channel = socket.channel("room:lobby", {})
 let chatInput = document.querySelector("#chat-input")
 let messagesContainer = document.querySelector("#chat-list")
 let roomInput = document.querySelector("#room-input")
+let roomsContainer = document.querySelector("#room-list")
 
-let loadMessages = resp => { 
-  console.log("Joined successfully", resp) 
+let loadMessages = resp => {
+  console.log("Joined successfully", resp)
   // clear out message container ul
   messagesContainer.innerHTML = ''
   // put messages (previous messages in the channel) into the ul
@@ -73,17 +74,22 @@ let loadMessages = resp => {
 }
 
 let joinChannel = newChannel => {
-  debugger
   channel.leave()
+  console.log(`left ${channel.topic} joined ${newChannel.topic}`)
   channel = newChannel
   channel.join()
-    .receive("ok", loadMessages)
+    .receive("ok", resp => {
+      let roomItem = document.createElement("li")
+      roomItem.innerText = `${roomInput.value}`
+      roomsContainer.appendChild(roomItem)
+      loadMessages(resp)
+    })
     .receive("error", resp => { console.log("Unable to join", resp) })
 }
 
-chatInput.addEventListener("keypress", event => { 
+chatInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
-    debugger
+    console.log(chatInput.value)
     channel.push("new_msg", {body: chatInput.value}) 
     chatInput.value = "" 
   }
@@ -92,13 +98,13 @@ chatInput.addEventListener("keypress", event => {
 let channelOnMessage = channel => {
   channel.on("new_msg", payload => { 
     console.log(payload)
-    let messageItem = document.createElement("li"); 
+    let messageItem = document.createElement("li")
     messageItem.innerText = `${payload.body} `
     messagesContainer.appendChild(messageItem)
   })
 }
 
-roomInput.addEventListener("keypress", event => { 
+roomInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
     let newChannel = socket.channel(`room:${roomInput.value}`, {})
     joinChannel(newChannel)
