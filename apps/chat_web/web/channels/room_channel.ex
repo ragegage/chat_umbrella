@@ -1,3 +1,5 @@
+require IEx
+
 defmodule ChatWeb.RoomChannel do
   use Phoenix.Channel
 
@@ -11,6 +13,8 @@ defmodule ChatWeb.RoomChannel do
   def handle_in("new_msg", %{"body" => body}, socket) do 
     "room:" <> room_name = socket.topic
     ChatServer.create(room_name, body)
+    IO.puts "new message coming in saying #{body}"
+    IO.inspect socket
     broadcast! socket, "new_msg", %{body: body}
     {:noreply, socket} 
   end

@@ -72,7 +72,10 @@ let loadMessages = resp => {
   })
 }
 
-let joinChannel = channel => {
+let joinChannel = newChannel => {
+  debugger
+  channel.leave()
+  channel = newChannel
   channel.join()
     .receive("ok", loadMessages)
     .receive("error", resp => { console.log("Unable to join", resp) })
@@ -80,6 +83,7 @@ let joinChannel = channel => {
 
 chatInput.addEventListener("keypress", event => { 
   if(event.keyCode === 13){
+    debugger
     channel.push("new_msg", {body: chatInput.value}) 
     chatInput.value = "" 
   }
@@ -87,6 +91,7 @@ chatInput.addEventListener("keypress", event => {
 
 let channelOnMessage = channel => {
   channel.on("new_msg", payload => { 
+    console.log(payload)
     let messageItem = document.createElement("li"); 
     messageItem.innerText = `${payload.body} `
     messagesContainer.appendChild(messageItem)
@@ -95,9 +100,9 @@ let channelOnMessage = channel => {
 
 roomInput.addEventListener("keypress", event => { 
   if(event.keyCode === 13){
-    channel = socket.channel(`room:${roomInput.value}`, {})
-    joinChannel(channel)
-    channelOnMessage(channel)
+    let newChannel = socket.channel(`room:${roomInput.value}`, {})
+    joinChannel(newChannel)
+    channelOnMessage(newChannel)
   }
 })
 
