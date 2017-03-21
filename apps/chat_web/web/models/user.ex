@@ -17,7 +17,7 @@ defmodule ChatWeb.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :password_digest])
-    |> validate_required([:email, :password_digest])
+    |> cast(params, @required_fields ++ @optional_fields)
+    |> validate_required(@required_fields)
   end
 end
