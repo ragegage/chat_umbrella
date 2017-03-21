@@ -1,5 +1,10 @@
 defmodule ChatServer.Supervisor do
   use Supervisor
+  use Application
+
+  def start(_type, _args) do
+    start_link
+  end
 
   def start_link do
     Supervisor.start_link(__MODULE__, :ok, name: :chat_supervisor)
