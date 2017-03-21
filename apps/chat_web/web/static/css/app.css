@@ -5,6 +5,34 @@ main {
 aside {
   width: 220px;
 }
+aside>label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+aside>ul {
+  list-style: none;
+}
 aside input {
   width: 120px;
+}
+section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#chat-list {
+  width: 100%;
+  padding-left: 0;
+  list-style: none;
+}
+#chat-list li {
+  padding: 7px 15px;
+}
+#chat-list li:nth-child(odd) {
+  background-color: #ddd;
+  border-left: 2px solid #ccc;
+}
+#chat-list li:nth-child(even) {
+  border-left: 2px solid #9898dc;
 }
