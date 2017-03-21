@@ -6,7 +6,7 @@ defmodule ChatWeb.User do
     field :password_digest, :string
     field :password, :string, virtual: true
 
-    timestamps()
+    timestamps
   end
 
   @required_fields ~w(email)a
