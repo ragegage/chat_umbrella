@@ -5,6 +5,10 @@
 # is restricted to this project.
 use Mix.Config
 
+# Configures the Ecto Repository
+config :chat_web,
+  ecto_repos: [ChatWeb.Repo]
+
 # Configures the endpoint
 config :chat_web, ChatWeb.Endpoint,
   url: [host: "localhost"],
