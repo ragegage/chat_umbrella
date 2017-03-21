@@ -17,6 +17,9 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <li><a href="https://github.com/ragegage/chat_umbrella">GitHub</a></li>
+            <li>
+              <%= link "Register", to: user_path(@conn, :new) %>
+            </li>
           </ul>
         </nav>
         <h1>Multi-room chat app</h1>
