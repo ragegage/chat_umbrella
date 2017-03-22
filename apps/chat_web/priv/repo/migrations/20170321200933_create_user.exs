@@ -3,13 +3,13 @@ defmodule ChatWeb.Repo.Migrations.CreateUser do
 
   def change do
     create table(:users) do
-      add :email, :string, null:false
+      add :email, :string, null: false
       add :password_digest, :string
 
       timestamps()
     end
 
-    create_unique_index(:users, [:email])
+    create unique_index(:users, [:email])
 
   end
 end

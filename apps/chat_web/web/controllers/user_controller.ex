@@ -2,7 +2,7 @@ defmodule ChatWeb.UserController do
   use ChatWeb.Web, :controller
 
   alias ChatWeb.User
-  
+
   plug :scrub_params, "user" when action in [:create]
 
   def show(conn, %{"id" => id}) do

@@ -6,15 +6,15 @@ defmodule ChatWeb.User do
     field :password_digest, :string
     field :password, :string, virtual: true
 
-    timestamps
+    timestamps()
   end
-
-  @required_fields ~w(email)a
-  @optional_fields ~w()a
 
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
+  @required_fields ~w(email)a
+  @optional_fields ~w()a
+
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, @required_fields ++ @optional_fields)
