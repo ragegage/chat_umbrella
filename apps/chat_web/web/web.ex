@@ -67,10 +67,10 @@ defmodule ChatWeb.Web do
       use Phoenix.Channel
       import ChatWeb.Gettext
 
-      alias LoginApp.Repo
+      alias ChatWeb.Repo
       import Ecto
       import Ecto.Query
-      import LoginApp.Gettext
+      import ChatWeb.Gettext
     end
   end
 

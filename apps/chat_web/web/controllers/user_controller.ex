@@ -21,6 +21,7 @@ defmodule ChatWeb.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
+        |> ChatWeb.Auth.login(user)
         |> put_flash(:info, "#{user.email} created!")
         |> redirect(to: user_path(conn, :show, user))
       {:error, changeset} ->

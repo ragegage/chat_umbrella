@@ -4,7 +4,6 @@
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
 import {Socket} from "phoenix"
-
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // When you connect, you'll often need to authenticate the client.
@@ -69,7 +68,7 @@ let loadMessages = resp => {
   // put messages (previous messages in the channel) into the ul
   resp.forEach(msg => {
     let messageItem = document.createElement("li");
-    messageItem.innerText = `${msg.content}`
+    messageItem.innerText = `${msg.username}: ${msg.content}`
     messagesContainer.appendChild(messageItem)
   })
 }
@@ -86,7 +85,9 @@ let joinChannel = newChannel => {
       roomsContainer.appendChild(roomItem)
       loadMessages(resp)
     })
-    .receive("error", resp => { console.log("Unable to join", resp) })
+    .receive("error", resp => { 
+      console.log("Unable to join", resp) 
+    })
 }
 
 chatInput.addEventListener("keypress", event => {
@@ -99,7 +100,7 @@ chatInput.addEventListener("keypress", event => {
 let channelOnMessage = channel => {
   channel.on("new_msg", payload => {
     let messageItem = document.createElement("li")
-    messageItem.innerText = `${payload.body} `
+    messageItem.innerText = `${payload.username}: ${payload.content} `
     messagesContainer.appendChild(messageItem)
   })
 }

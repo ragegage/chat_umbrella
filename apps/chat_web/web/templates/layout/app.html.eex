@@ -12,14 +12,23 @@
   </head>
 
   <body>
+    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
     <div class="container">
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <li><a href="https://github.com/ragegage/chat_umbrella">GitHub</a></li>
-            <li>
-              <%= link "Register", to: user_path(@conn, :new) %>
-            </li>
+            <%= if @current_user do %>
+              <li><%= @current_user.email %> (<%= @current_user.id %>)</li>
+              <li>
+                <%= link "Sign out", to: session_path(@conn, :delete,
+                                                      @current_user),
+                                    method: "delete" %>
+              </li>
+            <% else %>
+              <li><%= link "Register", to: user_path(@conn, :new) %></li>
+              <li><%= link "Sign in", to: session_path(@conn, :new) %></li>
+            <% end %>
           </ul>
         </nav>
         <h1>Multi-room chat app</h1>
@@ -33,6 +42,7 @@
       </main>
 
     </div> <!-- /container -->
+    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

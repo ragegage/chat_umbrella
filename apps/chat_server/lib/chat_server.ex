@@ -30,9 +30,9 @@ defmodule ChatServer do
 
   def handle_cast({:create, 
                   %{content: content, 
-                  username: username} = content}, state) do
+                  username: username} = message}, state) do
     # {:noreply, new state}
-    {:noreply, state ++ [content]}
+    {:noreply, state ++ [message]}
   end
   def handle_cast({:create, content}, state) do
     # {:noreply, new state}
