@@ -22,6 +22,6 @@ defmodule ChatWeb.SessionController do
     conn
     |> ChatWeb.Auth.logout
     |> put_flash(:info, "See you later!")
-    |> redirect(to: session_path(conn, :index))
+    |> redirect(to: page_path(conn, :index))
   end
 end
