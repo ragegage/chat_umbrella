@@ -19,10 +19,11 @@ config :chat_web, ChatWeb.Endpoint,
            adapter: Phoenix.PubSub.PG2]
 
 config :chat_web, ChatWeb.Repo,
-  ecto_repos: [ChatWeb.Repo],
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+
+config :chat_web, ecto_repos: [ChatWeb.Repo]
 
 # Configures Elixir's Logger
 config :logger, :console,
