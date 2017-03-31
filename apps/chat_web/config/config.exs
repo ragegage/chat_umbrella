@@ -5,12 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
-config :chat_web, ChatWeb.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  database: "chat_web_repo",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost"
+config :chat_web,
+  ecto_repos: [ChatWeb.Repo]
 
 
 # Configures the Ecto Repository

@@ -14,18 +14,17 @@ use Mix.Config
 config :chat_web, ChatWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "demoelixirchatapp.herokuapp.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json",
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
+  cache_static_manifest: "priv/static/manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info
 
 # Configure your database
-config :hello_phoenix, HelloPhoenix.Repo,
-adapter: Ecto.Adapters.Postgres,
-url: System.get_env("DATABASE_URL"),
-pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-ssl: true
+# config :hello_phoenix, HelloPhoenix.Repo,
+# adapter: Ecto.Adapters.Postgres,
+# url: System.get_env("DATABASE_URL"),
+# pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+# ssl: true
 
 # ## SSL Support
 #
