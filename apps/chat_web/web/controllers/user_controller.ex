@@ -23,7 +23,7 @@ defmodule ChatWeb.UserController do
         conn
         |> ChatWeb.Auth.login(user)
         |> put_flash(:info, "#{user.email} created!")
-        |> redirect(to: user_path(conn, :show, user))
+        |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
