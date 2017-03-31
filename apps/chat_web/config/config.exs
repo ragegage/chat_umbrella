@@ -5,7 +5,8 @@
 # is restricted to this project.
 use Mix.Config
 
-config :chat_web, ChatWeb.Repo,
+config :chat_web,
+  ecto_repos: [ChatWeb.Repo],
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL")
 
