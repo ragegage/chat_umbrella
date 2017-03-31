@@ -6,7 +6,7 @@
 use Mix.Config
 
 config :chat_web,
-  ecto_repos: [ChatWeb.Repo]
+  ecto_repos: [ChatWeb.Repo],
   adapter: Ecto.Adapters.Postgres,
   database: "chat_web_repo"
 
