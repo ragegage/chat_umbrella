@@ -5,12 +5,6 @@
 # is restricted to this project.
 use Mix.Config
 
-config :chat_web, ChatWeb.Repo,
-  ecto_repos: [ChatWeb.Repo],
-  adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
-
 
 # Configures the Ecto Repository
 # config :chat_web,
@@ -23,6 +17,12 @@ config :chat_web, ChatWeb.Endpoint,
   render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: ChatWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
+
+config :chat_web, ChatWeb.Repo,
+  ecto_repos: [ChatWeb.Repo],
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 # Configures Elixir's Logger
 config :logger, :console,
