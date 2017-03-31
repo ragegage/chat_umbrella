@@ -5,23 +5,19 @@
 # is restricted to this project.
 use Mix.Config
 
-config :chat_web,
-  ecto_repos: [ChatWeb.Repo],
+config :chat_web, ChatWeb.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "chat_web_repo",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost"
+  url: System.get_env("DATABASE_URL")
 
 
 # Configures the Ecto Repository
-config :chat_web,
-  ecto_repos: [ChatWeb.Repo]
+# config :chat_web,
+#   ecto_repos: [ChatWeb.Repo]
 
 # Configures the endpoint
 config :chat_web, ChatWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "REaiFm60L5WLRshOJOGwTLhT0eRJgqoq+IezkrU5cjqlbOfYcb+L6U6557roHMRv",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: ChatWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
