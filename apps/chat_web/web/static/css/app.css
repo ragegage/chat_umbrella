@@ -1,32 +1,128 @@
 /* This file is for your main application css. */
-main {
-  display: flex;
+/*reset*/
+body, h1, p, a, h2, ul, li, input, button {
+  font-family: Helvetica Neue, Helvetica, sans-serif;
+  font-weight: 200;
+  margin: 0;
+  padding: 0;
+  color: black;
 }
-aside {
-  width: 220px;
-}
-aside>label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-aside>ul {
+ul {
   list-style: none;
 }
-aside input {
-  width: 120px;
+a {
+  text-decoration: none;
 }
-section {
+button {
+  border-style: none;
+  border-image: none;
+  background-color: #ddd;
+}
+.alert {
+  text-align: center;
+}
+.alert-danger {
+  color: red;
+}
+
+/*header*/
+header {
   display: flex;
+  justify-content: space-between;
+  max-width: 1080px;
+  padding: 0 20px;
+}
+ul.nav {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+ul.nav li {
+  padding: 0 3px;
+}
+form.link>a {
+  border: 1px solid #ddd;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+/*main*/
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main > section {
+  height: calc(100vh - 40px);
+  width: 100%;
+}
+
+/*login*/
+.login, .signup {
+  display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+.login h1, .signup h1 {
+  margin-bottom: 5px;
+}
+.login form, .signup form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login .form-group, .signup .form-group {
+  margin: 5px 0;
+}
+.login button, .signup button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+/*chat*/
+.chat {
+  display: flex;
+  flex-direction: row;
+}
+#chat-input, #room-input {
+  box-sizing: border-box;
+  font-size: 16px;
+  padding: 5px 3px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+/*room list*/
+aside {
+  width: 220px;
+  height: 100%;
+}
+#room-list {
+  margin-top: 10px;
+}
+#room-list>li {
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+/*chat list*/
+section.chat-pane {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  flex-grow: 1;
+}
 #chat-list {
   width: 100%;
-  padding-left: 0;
-  list-style: none;
+  height: calc(100% - 40px);
+  overflow-y: auto;
 }
 #chat-list li {
+  box-sizing: border-box;
   padding: 7px 15px;
 }
 #chat-list li:nth-child(odd) {
@@ -36,3 +132,9 @@ section {
 #chat-list li:nth-child(even) {
   border-left: 2px solid #9898dc;
 }
+
+/*media queries*/
+/*< 700px wide:*/
+/*header>h1 {
+  font-size: 16px;
+}*/

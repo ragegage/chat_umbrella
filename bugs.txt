@@ -1,0 +1,2 @@
+sign in click without filling in fields gives error
+fix zebra-stripe chat messages - your messages should be x and others' messages should be y
