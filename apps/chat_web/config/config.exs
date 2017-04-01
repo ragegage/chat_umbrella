@@ -13,7 +13,8 @@ use Mix.Config
 # Configures the endpoint
 config :chat_web, ChatWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  secret_key_base: System.get_env("SECRET_KEY_BASE") ||
+    "uKQDPNGKvlPQpG1/LseNzh8OTHFsENicicRRu0/AizYDSLaslKoW24kdS1JaTrm4",
   render_errors: [view: ChatWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: ChatWeb.PubSub,
            adapter: Phoenix.PubSub.PG2]
