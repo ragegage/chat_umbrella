@@ -10,7 +10,7 @@ defmodule ChatWeb.SessionController do
                                                  password) do
       {:ok, conn} ->
         conn
-        |> put_flash(:info, "You’re now signed in!")
+        # |> put_flash(:info, "You’re now signed in!")
         |> redirect(to: page_path(conn, :index))
       {:error, _reason, conn} ->
         conn
