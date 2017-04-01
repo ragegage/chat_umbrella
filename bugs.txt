@@ -1,4 +1,5 @@
 sign in click without filling in fields gives error
-fix zebra-stripe chat messages - your messages should be x and others' messages should be y
+fix zebra-stripe chat messages - your messages should be x and others' messages should be y (maybe just change the name's color)
 should auto-scroll to bottom of messages list on each new incoming message
 disconnect from socket when user logs out
+click on old room name changes to that room
