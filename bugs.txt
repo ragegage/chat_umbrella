@@ -1,2 +1,4 @@
 sign in click without filling in fields gives error
 fix zebra-stripe chat messages - your messages should be x and others' messages should be y
+should auto-scroll to bottom of messages list on each new incoming message
+disconnect from socket when user logs out
