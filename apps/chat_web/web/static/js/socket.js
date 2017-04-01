@@ -59,6 +59,7 @@ let newChannel = socket.channel("room:lobby", {})
 let chatInput = document.querySelector("#chat-input")
 let messagesContainer = document.querySelector("#chat-list")
 let roomInput = document.querySelector("#room-input")
+let roomTitle = document.querySelector("#chat-room-title")
 let roomsContainer = document.querySelector("#room-list")
 
 let loadMessages = resp => {
@@ -83,6 +84,7 @@ let joinChannel = newChannel => {
       let roomItem = document.createElement("li")
       roomItem.innerText = `${roomInput.value}`
       roomsContainer.appendChild(roomItem)
+      roomTitle.innerText = `${roomInput.value}`
       loadMessages(resp)
       roomInput.value = ''
     })

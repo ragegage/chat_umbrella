@@ -1,6 +1,6 @@
 /* This file is for your main application css. */
 /*reset*/
-body, h1, p, a, h2, ul, li, input, button {
+body, h1, h2, h3, h4, p, a, ul, li, input, button {
   font-family: Helvetica Neue, Helvetica, sans-serif;
   font-weight: 200;
   margin: 0;
@@ -26,7 +26,7 @@ button {
 }
 
 /*header*/
-header {
+.header {
   display: flex;
   justify-content: space-between;
   max-width: 1080px;
@@ -116,9 +116,34 @@ section.chat-pane {
   height: 100%;
   flex-grow: 1;
 }
+.chat-header {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 5px;
+  box-sizing: border-box;
+  justify-content: center;
+}
+.room-facts {
+  display: flex;
+  font-size: 13px;
+  font-style: italic;
+}
+.room-facts > li {
+  margin-right: 5px;
+  padding-right: 5px;
+  border-right: 1px solid #999;
+}
+.room-facts > li:last-of-type {
+  margin-right: 0;
+  padding-right: 0;
+  border-right: none;
+}
 #chat-list {
   width: 100%;
-  height: calc(100% - 40px);
+  /*100% - #chat-input - #chat-room-title*/
+  height: calc(100% - 40px - 40px);
   overflow-y: auto;
 }
 #chat-list li {
