@@ -84,9 +84,10 @@ let joinChannel = newChannel => {
       roomItem.innerText = `${roomInput.value}`
       roomsContainer.appendChild(roomItem)
       loadMessages(resp)
+      roomInput.value = ''
     })
-    .receive("error", resp => { 
-      console.log("Unable to join", resp) 
+    .receive("error", resp => {
+      console.log("Unable to join", resp)
     })
 }
 
