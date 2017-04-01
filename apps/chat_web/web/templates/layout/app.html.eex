@@ -14,23 +14,23 @@
   <body>
     <div class="container">
       <header class="header">
+        <h1>Multi-room chat app</h1>
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <li><a href="https://github.com/ragegage/chat_umbrella">GitHub</a></li>
             <%= if @current_user do %>
-              <li><%= @current_user.email %> (<%= @current_user.id %>)</li>
-              <li>
-                <%= link "Sign out", to: session_path(@conn, :delete,
-                                                      @current_user),
-                                    method: "delete" %>
-              </li>
+            <li>Welcome, <%= @current_user.email %>!</li>
+            <li>
+              <%= link "Sign out", to: session_path(@conn, :delete,
+              @current_user),
+              method: "delete" %>
+            </li>
             <% else %>
-              <li><%= link "Register", to: user_path(@conn, :new) %></li>
-              <li><%= link "Sign in", to: session_path(@conn, :new) %></li>
+            <li><%= link "Register", to: user_path(@conn, :new) %></li>
+            <li><%= link "Sign in", to: session_path(@conn, :new) %></li>
             <% end %>
           </ul>
         </nav>
-        <h1>Multi-room chat app</h1>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
