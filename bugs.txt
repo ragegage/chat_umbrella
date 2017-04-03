@@ -7,7 +7,8 @@ extras:
 add timestamp (H:MM PM) to chat messages
 profile pictures (start with default prof pic for all)
 load list of active channels
-click on old room name changes to that room
-DMs
+click on room name joins that room
+use presence to track (# of?) users currently online
 /giphy
 emoji support
+DMs
