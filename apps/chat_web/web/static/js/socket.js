@@ -63,13 +63,13 @@ let roomTitle = document.querySelector("#chat-room-title")
 let roomsContainer = document.querySelector("#room-list")
 
 let loadMessages = resp => {
-  console.log("Joined successfully", resp)
+  // console.log("Joined successfully", resp)
   // clear out message container ul
   messagesContainer.innerHTML = ''
   // put messages (previous messages in the channel) into the ul
   resp.forEach(msg => {
     let messageItem = document.createElement("li");
-    messageItem.innerText = `${msg.username}: ${msg.content}`
+    messageItem.innerHTML = formatMessage(msg.username, msg.content)
     messagesContainer.appendChild(messageItem)
   })
 }
@@ -103,10 +103,17 @@ chatInput.addEventListener("keypress", event => {
 let channelOnMessage = channel => {
   channel.on("new_msg", payload => {
     let messageItem = document.createElement("li")
-    messageItem.innerText = `${payload.username}: ${payload.content} `
+    messageItem.innerHTML = formatMessage(payload.username, payload.content)
     messagesContainer.appendChild(messageItem)
   })
 }
+
+let formatMessage = (name, content) => (
+`<name>${name}</name>
+ <time></time>
+ <msg>${content}</msg>`
+)
+
 
 roomInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
