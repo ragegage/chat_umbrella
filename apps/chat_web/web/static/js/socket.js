@@ -109,8 +109,9 @@ let channelOnMessage = channel => {
 }
 
 let formatMessage = (name, content) => (
-`<name>${name}</name>
- <time></time>
+`<prof></prof>
+ <name>${name}</name>
+ <time>7:38PM</time>
  <msg>${content}</msg>`
 )
 
