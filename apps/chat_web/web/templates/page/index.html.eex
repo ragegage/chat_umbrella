@@ -1,6 +1,7 @@
 <section class="chat">
   <aside>
     <input id='room-input' placeholder='change room...' value='lobby' />
+    <h3>Chat Rooms</h3>
     <ul id='room-list'>
     </ul>
   </aside>
