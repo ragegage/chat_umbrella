@@ -161,11 +161,11 @@ section.chat-pane {
   padding: 7px 15px;
 }
 #chat-list li:nth-child(odd) {
-  background-color: #ddd;
-  border-left: 2px solid #ccc;
+  /*background-color: #ddd;
+  border-left: 2px solid #ccc;*/
 }
 #chat-list li:nth-child(even) {
-  border-left: 2px solid #9898dc;
+  /*border-left: 2px solid #9898dc;*/
 }
 
 /*media queries*/
