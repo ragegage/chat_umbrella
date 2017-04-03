@@ -17,9 +17,11 @@
         <h1>Multi-room chat app</h1>
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
+            <%= if @current_user do %>
+              <li>Welcome, <%= @current_user.email %>!</li>
+            <% end %>
             <li><a href="https://github.com/ragegage/chat_umbrella">GitHub</a></li>
             <%= if @current_user do %>
-            <li>Welcome, <%= @current_user.email %>!</li>
             <li>
               <%= link "Sign out", to: session_path(@conn, :delete,
               @current_user),
