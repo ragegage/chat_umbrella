@@ -1,11 +1,10 @@
 sign in click without filling in fields gives error
-fix zebra-stripe chat messages - your messages should be x and others' messages should be y (maybe just change the name's color)
 should auto-scroll to bottom of messages list on each new incoming message
 disconnect from socket when user logs out
 
 extras:
-add timestamp (H:MM PM) to chat messages
-profile pictures (start with default prof pic for all)
+add (real) timestamp (H:MM PM) to chat messages
+(real) profile pictures
 load list of active channels
 click on room name joins that room
 use presence to track (# of?) users currently online
