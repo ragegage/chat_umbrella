@@ -1,7 +1,10 @@
 # Chat
 
 This is an umbrella app combining a Phoenix web app with the ChatServer
-app (https://github.com/ragegage/chat_server) and basic authentication.
+app (https://github.com/ragegage/chat_server) and basic authentication 
+(https://github.com/ragegage/phoenix_auth). The chat server allows users
+to create and join chat rooms and post messages to those rooms. The 
+messages are stored in memory, rather than persisted to a database.
 
 To run locally: 
 
