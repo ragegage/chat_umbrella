@@ -1,5 +1,3 @@
-require IEx
-
 defmodule ChatWeb.RoomChannel do
   use Phoenix.Channel
   alias ChatWeb.User
