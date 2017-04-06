@@ -108,12 +108,19 @@ let channelOnMessage = channel => {
   })
 }
 
-let formatMessage = (name, content) => (
-`<prof></prof>
- <name>${name}</name>
- <time>7:38PM</time>
- <msg>${content}</msg>`
-)
+let formatMessage = (name, content) => {
+  const d = new Date()
+  let h = d.getHours()
+  let m = d.getMinutes()
+  m = m < 10 ? "0" + m : m
+  const ampm = h > 11 ? "PM" : "AM"
+  h = h == 0 ? 12 : h % 12
+
+  return `<prof></prof>
+   <name>${name}</name>
+   <time>${h}:${m} ${ampm}</time>
+   <msg>${content}</msg>`
+}
 
 
 roomInput.addEventListener("keypress", event => {
