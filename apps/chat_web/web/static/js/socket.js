@@ -69,7 +69,7 @@ let loadMessages = resp => {
   // put messages (previous messages in the channel) into the ul
   resp.forEach(msg => {
     let messageItem = document.createElement("li");
-    messageItem.innerHTML = formatMessage(msg.username, msg.content)
+    messageItem.innerHTML = formatMessage(msg.username, msg.content, msg.prof)
     messagesContainer.appendChild(messageItem)
   })
 }
@@ -103,12 +103,12 @@ chatInput.addEventListener("keypress", event => {
 let channelOnMessage = channel => {
   channel.on("new_msg", payload => {
     let messageItem = document.createElement("li")
-    messageItem.innerHTML = formatMessage(payload.username, payload.content)
+    messageItem.innerHTML = formatMessage(payload.username, payload.content, payload.prof)
     messagesContainer.appendChild(messageItem)
   })
 }
 
-let formatMessage = (name, content) => {
+let formatMessage = (name, content, prof) => {
   const d = new Date()
   let h = d.getHours()
   let m = d.getMinutes()
@@ -116,7 +116,7 @@ let formatMessage = (name, content) => {
   const ampm = h > 11 ? "PM" : "AM"
   h = h == 0 ? 12 : h % 12
 
-  return `<prof></prof>
+  return `<prof style="background-image: url(${prof})"></prof>
    <name>${name}</name>
    <time>${h}:${m} ${ampm}</time>
    <msg>${content}</msg>`
