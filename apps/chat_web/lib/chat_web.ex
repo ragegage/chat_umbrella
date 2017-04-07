@@ -11,6 +11,7 @@ defmodule ChatWeb do
       # Start the endpoint when the application starts
       supervisor(ChatWeb.Endpoint, []),
       supervisor(ChatWeb.Repo, []),
+      supervisor(ChatWeb.Presence, []),
       # Start your own worker by calling: ChatWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(ChatWeb.Worker, [arg1, arg2, arg3]),
     ]

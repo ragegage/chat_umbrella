@@ -61,6 +61,7 @@ let messagesContainer = document.querySelector("#chat-list")
 let roomInput = document.querySelector("#room-input")
 let roomTitle = document.querySelector("#chat-room-title")
 let roomsContainer = document.querySelector("#room-list")
+let userCount = document.querySelector("#user-count")
 
 let loadMessages = resp => {
   // console.log("Joined successfully", resp)
@@ -81,6 +82,10 @@ let joinChannel = newChannel => {
   channel = newChannel
   channel.join()
     .receive("ok", resp => {
+      for (var i = 0; i < roomsContainer.children.length; i++)
+        if(roomsContainer.children[i].innerText === roomInput.value)
+          roomsContainer.removeChild(roomsContainer.children[i])
+      
       let roomItem = document.createElement("li")
       roomItem.innerText = `${roomInput.value}`
       roomsContainer.appendChild(roomItem)
@@ -108,6 +113,19 @@ let channelOnMessage = channel => {
   })
 }
 
+let channelOnPresence = channel => {
+  channel.on("presence_state", payload => {
+    console.log(payload);
+    userCount.innerText = Object.keys(payload).length
+  })
+  channel.on("presence_diff", diff => {
+    console.log("diff");
+    console.log(diff);
+    userCount.innerText = (parseInt(userCount.innerText) +
+      Object.keys(diff.joins).length - Object.keys(diff.leaves).length)
+  })
+}
+
 let formatMessage = (name, content, prof) => {
   const d = new Date()
   let h = d.getHours()
@@ -128,10 +146,12 @@ roomInput.addEventListener("keypress", event => {
     let newChannel = socket.channel(`room:${roomInput.value}`, {})
     joinChannel(newChannel)
     channelOnMessage(newChannel)
+    channelOnPresence(newChannel)
   }
 })
 
 joinChannel(newChannel)
 channelOnMessage(newChannel)
+channelOnPresence(newChannel)
 
 export default socket
