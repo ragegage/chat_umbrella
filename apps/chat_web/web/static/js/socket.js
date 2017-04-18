@@ -64,7 +64,6 @@ let roomsContainer = document.querySelector("#room-list")
 let userCount = document.querySelector("#user-count")
 
 let loadMessages = resp => {
-  // console.log("Joined successfully", resp)
   // clear out message container ul
   messagesContainer.innerHTML = ''
   // put messages (previous messages in the channel) into the ul
@@ -75,7 +74,11 @@ let loadMessages = resp => {
   })
 }
 
-let joinChannel = newChannel => {
+let joinRoomOnClick = (e) => {
+  setupChannel(e.currentTarget.innerText)
+}
+
+let joinChannel = (newChannel, channelName) => {
   if(channel) {
     channel.leave()
   }
@@ -83,13 +86,14 @@ let joinChannel = newChannel => {
   channel.join()
     .receive("ok", resp => {
       for (var i = 0; i < roomsContainer.children.length; i++)
-        if(roomsContainer.children[i].innerText === roomInput.value)
+        if(roomsContainer.children[i].innerText === channelName)
           roomsContainer.removeChild(roomsContainer.children[i])
       
       let roomItem = document.createElement("li")
-      roomItem.innerText = `${roomInput.value}`
+      roomItem.innerText = `${channelName}`
+      roomItem.addEventListener('click', joinRoomOnClick)
       roomsContainer.appendChild(roomItem)
-      roomTitle.innerText = `${roomInput.value}`
+      roomTitle.innerText = `${channelName}`
       loadMessages(resp)
       roomInput.value = ''
     })
@@ -143,15 +147,17 @@ let formatMessage = (name, content, prof) => {
 
 roomInput.addEventListener("keypress", event => {
   if(event.keyCode === 13){
-    let newChannel = socket.channel(`room:${roomInput.value}`, {})
-    joinChannel(newChannel)
-    channelOnMessage(newChannel)
-    channelOnPresence(newChannel)
+    setupChannel(roomInput.value)
   }
 })
 
-joinChannel(newChannel)
-channelOnMessage(newChannel)
-channelOnPresence(newChannel)
+let setupChannel = (channelName) => {
+  let newChannel = socket.channel(`room:${channelName}`, {})
+  joinChannel(newChannel, channelName)
+  channelOnMessage(newChannel)
+  channelOnPresence(newChannel)
+}
+
+setupChannel("lobby")
 
 export default socket
