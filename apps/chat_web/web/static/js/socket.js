@@ -111,10 +111,15 @@ chatInput.addEventListener("keypress", event => {
 
 let channelOnMessage = channel => {
   channel.on("new_msg", payload => {
+    playSound()
     let messageItem = document.createElement("li")
     messageItem.innerHTML = formatMessage(payload.username, payload.content, payload.prof)
     messagesContainer.appendChild(messageItem)
   })
+}
+
+let playSound = () => {
+  new Audio('./images/ding.mp3').play()
 }
 
 let channelOnPresence = channel => {
