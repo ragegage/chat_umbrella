@@ -115,6 +115,7 @@ aside > h3 {
 #room-list>li {
   padding-left: 10px;
   padding-bottom: 10px;
+  cursor: pointer;
 }
 
 /*chat list*/
