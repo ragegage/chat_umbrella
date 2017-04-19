@@ -4,7 +4,8 @@
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
 import {Socket} from "phoenix"
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+
+let socket
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -50,120 +51,128 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 
-socket.connect()
+let setupSocket = (socket) => {
+  socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel
-let newChannel = socket.channel("room:lobby", {})
+  // Now that you are connected, you can join channels with a topic:
+  let channel
+  let newChannel = socket.channel("room:lobby", {})
 
-let chatInput = document.querySelector("#chat-input")
-let messagesContainer = document.querySelector("#chat-list")
-let roomInput = document.querySelector("#room-input")
-let roomTitle = document.querySelector("#chat-room-title")
-let roomsContainer = document.querySelector("#room-list")
-let userCount = document.querySelector("#user-count")
+  let chatInput = document.querySelector("#chat-input")
+  let messagesContainer = document.querySelector("#chat-list")
+  let roomInput = document.querySelector("#room-input")
+  let roomTitle = document.querySelector("#chat-room-title")
+  let roomsContainer = document.querySelector("#room-list")
+  let userCount = document.querySelector("#user-count")
 
-let loadMessages = resp => {
-  // clear out message container ul
-  messagesContainer.innerHTML = ''
-  // put messages (previous messages in the channel) into the ul
-  resp.forEach(msg => {
-    let messageItem = document.createElement("li");
-    messageItem.innerHTML = formatMessage(msg.username, msg.content, msg.prof)
-    messagesContainer.appendChild(messageItem)
-  })
-}
-
-let joinRoomOnClick = (e) => {
-  setupChannel(e.currentTarget.innerText)
-}
-
-let joinChannel = (newChannel, channelName) => {
-  if(channel) {
-    channel.leave()
-  }
-  channel = newChannel
-  channel.join()
-    .receive("ok", resp => {
-      for (var i = 0; i < roomsContainer.children.length; i++)
-        if(roomsContainer.children[i].innerText === channelName)
-          roomsContainer.removeChild(roomsContainer.children[i])
-      
-      let roomItem = document.createElement("li")
-      roomItem.innerText = `${channelName}`
-      roomItem.addEventListener('click', joinRoomOnClick)
-      roomsContainer.appendChild(roomItem)
-      roomTitle.innerText = `${channelName}`
-      loadMessages(resp)
-      roomInput.value = ''
+  let loadMessages = resp => {
+    // clear out message container ul
+    messagesContainer.innerHTML = ''
+    // put messages (previous messages in the channel) into the ul
+    resp.forEach(msg => {
+      let messageItem = document.createElement("li");
+      messageItem.innerHTML = formatMessage(msg.username, msg.content, msg.prof)
+      messagesContainer.appendChild(messageItem)
     })
-    .receive("error", resp => {
-      console.log("Unable to join", resp)
+  }
+
+  let joinRoomOnClick = (e) => {
+    setupChannel(e.currentTarget.innerText)
+  }
+
+  let joinChannel = (newChannel, channelName) => {
+    if(channel) {
+      channel.leave()
+    }
+    channel = newChannel
+    channel.join()
+      .receive("ok", resp => {
+        for (var i = 0; i < roomsContainer.children.length; i++)
+          if(roomsContainer.children[i].innerText === channelName)
+            roomsContainer.removeChild(roomsContainer.children[i])
+        
+        let roomItem = document.createElement("li")
+        roomItem.innerText = `${channelName}`
+        roomItem.addEventListener('click', joinRoomOnClick)
+        roomsContainer.appendChild(roomItem)
+        roomTitle.innerText = `${channelName}`
+        loadMessages(resp)
+        roomInput.value = ''
+      })
+      .receive("error", resp => {
+        console.log("Unable to join", resp)
+      })
+  }
+
+  chatInput.addEventListener("keypress", event => {
+    if(event.keyCode === 13){
+      channel.push("new_msg", {body: chatInput.value})
+      chatInput.value = ""
+    }
+  })
+
+  let channelOnMessage = channel => {
+    channel.on("new_msg", payload => {
+      playSound()
+      let messageItem = document.createElement("li")
+      messageItem.innerHTML = formatMessage(payload.username, payload.content, payload.prof)
+      messagesContainer.appendChild(messageItem)
+      messageItem.scrollIntoView()
     })
-}
-
-chatInput.addEventListener("keypress", event => {
-  if(event.keyCode === 13){
-    channel.push("new_msg", {body: chatInput.value})
-    chatInput.value = ""
   }
-})
 
-let channelOnMessage = channel => {
-  channel.on("new_msg", payload => {
-    playSound()
-    let messageItem = document.createElement("li")
-    messageItem.innerHTML = formatMessage(payload.username, payload.content, payload.prof)
-    messagesContainer.appendChild(messageItem)
-    messageItem.scrollIntoView()
-  })
-}
-
-let playSound = () => {
-  new Audio('./images/ding.mp3').play()
-}
-
-let channelOnPresence = channel => {
-  channel.on("presence_state", payload => {
-    console.log(payload);
-    userCount.innerText = Object.keys(payload).length
-  })
-  channel.on("presence_diff", diff => {
-    console.log("diff");
-    console.log(diff);
-    userCount.innerText = (parseInt(userCount.innerText) +
-      Object.keys(diff.joins).length - Object.keys(diff.leaves).length)
-  })
-}
-
-let formatMessage = (name, content, prof) => {
-  const d = new Date()
-  let h = d.getHours()
-  let m = d.getMinutes()
-  m = m < 10 ? "0" + m : m
-  const ampm = h > 11 ? "PM" : "AM"
-  h = h == 0 ? 12 : h % 12
-
-  return `<prof style="background-image: url(${prof})"></prof>
-   <name>${name}</name>
-   <time>${h}:${m} ${ampm}</time>
-   <msg>${content}</msg>`
-}
-
-
-roomInput.addEventListener("keypress", event => {
-  if(event.keyCode === 13){
-    setupChannel(roomInput.value)
+  let playSound = () => {
+    new Audio('./images/ding.mp3').play()
   }
-})
 
-let setupChannel = (channelName) => {
-  let newChannel = socket.channel(`room:${channelName}`, {})
-  joinChannel(newChannel, channelName)
-  channelOnMessage(newChannel)
-  channelOnPresence(newChannel)
+  let channelOnPresence = channel => {
+    channel.on("presence_state", payload => {
+      console.log(payload);
+      userCount.innerText = Object.keys(payload).length
+    })
+    channel.on("presence_diff", diff => {
+      console.log("diff");
+      console.log(diff);
+      userCount.innerText = (parseInt(userCount.innerText) +
+        Object.keys(diff.joins).length - Object.keys(diff.leaves).length)
+    })
+  }
+
+  let formatMessage = (name, content, prof) => {
+    const d = new Date()
+    let h = d.getHours()
+    let m = d.getMinutes()
+    m = m < 10 ? "0" + m : m
+    const ampm = h > 11 ? "PM" : "AM"
+    h = h == 0 ? 12 : h % 12
+
+    return `<prof style="background-image: url(${prof})"></prof>
+    <name>${name}</name>
+    <time>${h}:${m} ${ampm}</time>
+    <msg>${content}</msg>`
+  }
+
+
+  roomInput.addEventListener("keypress", event => {
+    if(event.keyCode === 13){
+      setupChannel(roomInput.value)
+    }
+  })
+
+  let setupChannel = (channelName) => {
+    let newChannel = socket.channel(`room:${channelName}`, {})
+    joinChannel(newChannel, channelName)
+    channelOnMessage(newChannel)
+    channelOnPresence(newChannel)
+  }
+
+  setupChannel("lobby")
+  return socket
 }
 
-setupChannel("lobby")
+if (window.userToken !== "") {
+  debugger
+  socket = setupSocket(new Socket("/socket", {params: {token: window.userToken}}))
+}
 
 export default socket
