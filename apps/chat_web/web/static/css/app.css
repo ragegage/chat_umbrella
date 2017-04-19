@@ -161,7 +161,7 @@ section.chat-pane {
   box-sizing: border-box;
   padding: 7px 15px;
   position: relative;
-  min-height: 40px;
+  min-height: 50px;
 }
 #chat-list li:nth-child(odd) {
   /*background-color: #ddd;
