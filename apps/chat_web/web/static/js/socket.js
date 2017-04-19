@@ -115,6 +115,7 @@ let channelOnMessage = channel => {
     let messageItem = document.createElement("li")
     messageItem.innerHTML = formatMessage(payload.username, payload.content, payload.prof)
     messagesContainer.appendChild(messageItem)
+    messageItem.scrollIntoView()
   })
 }
 
