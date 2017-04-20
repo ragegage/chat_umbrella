@@ -70,9 +70,7 @@ let setupSocket = (socket) => {
     messagesContainer.innerHTML = ''
     // put messages (previous messages in the channel) into the ul
     resp.forEach(msg => {
-      let messageItem = document.createElement("li");
-      messageItem.innerHTML = formatMessage(msg.username, msg.content, msg.prof)
-      messagesContainer.appendChild(messageItem)
+      receiveMessage(msg)
     })
   }
 
@@ -114,11 +112,15 @@ let setupSocket = (socket) => {
   let channelOnMessage = channel => {
     channel.on("new_msg", payload => {
       playSound()
-      let messageItem = document.createElement("li")
-      messageItem.innerHTML = formatMessage(payload.username, payload.content, payload.prof)
-      messagesContainer.appendChild(messageItem)
-      messageItem.scrollIntoView()
+      receiveMessage(payload)
     })
+  }
+
+  let receiveMessage = message => {
+    let messageItem = document.createElement("li")
+    messageItem.innerHTML = formatMessage(message.username, message.content, message.prof)
+    messagesContainer.appendChild(messageItem)
+    messageItem.scrollIntoView()
   }
 
   let playSound = () => {
