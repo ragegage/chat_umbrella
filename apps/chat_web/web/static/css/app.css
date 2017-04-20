@@ -188,6 +188,9 @@ section.chat-pane {
   display: block;
   margin-left: 45px;
 }
+#chat-list msg > img {
+  height: 200px;
+}
 
 /*media queries*/
 /*< 700px wide:*/
