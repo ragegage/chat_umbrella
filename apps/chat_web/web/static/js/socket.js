@@ -104,8 +104,20 @@ let setupSocket = (socket) => {
 
   chatInput.addEventListener("keypress", event => {
     if(event.keyCode === 13){
-      channel.push("new_msg", {body: chatInput.value})
-      chatInput.value = ""
+      const message = chatInput.value
+      if (message.match(/\/giphy/)) {
+        let query = message.slice(7).split(" ").join("+")
+        fetch(`http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${query}`)
+          .then(res => res.json())
+          .then(res => {
+            let image = `<img src="${res.data.image_url}" />`
+            channel.push("new_msg", {body: image})
+            chatInput.value = ""
+          })
+      } else {
+        channel.push("new_msg", {body: message})
+        chatInput.value = ""
+      }
     }
   })
 
@@ -118,18 +130,6 @@ let setupSocket = (socket) => {
 
   let receiveMessage = message => {
     let messageItem = document.createElement("li")
-    if (message.content.match(/\/giphy/)) {
-      let query = message.content.slice(7).split(" ").join("+")
-      fetch(`http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${query}`)
-        .then(res => res.json())
-        .then(res => {
-          let image = `<img src="${res.data.image_url}" />`
-          messageItem.innerHTML = formatMessage(message.username, image, message.prof)
-          messagesContainer.appendChild(messageItem)
-          messageItem.scrollIntoView()
-        })
-      console.log("fetching giphy")
-    }
     messageItem.innerHTML = formatMessage(message.username, message.content, message.prof)
     messagesContainer.appendChild(messageItem)
     messageItem.scrollIntoView()
