@@ -16,3 +16,13 @@ To run locally:
 Instructions for creating a basic version of this app (the version on the 
 `no-auth` branch) can be found at
 https://github.com/ragegage/elixir_lectures/blob/master/phoenix_umbrella.md.
+
+## Future development goals:
+
+- [X] standard anonymous profile picture
+- [X] Giphy integration
+- [X] "ding" when new message is received (as per user request)
+- [X] can change chat room by clicking on chat room name
+- [ ] allow users to upload real profile pictures
+- [ ] add support for emoji
+- [ ] allow users to directly message each other
