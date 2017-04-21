@@ -189,7 +189,10 @@ section.chat-pane {
   margin-left: 45px;
 }
 #chat-list msg > img {
-  height: 200px;
+  max-height: 400px;
+  max-width: 600px;
+  height: auto;
+  width: auto;
 }
 
 /*media queries*/
