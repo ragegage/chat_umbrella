@@ -107,7 +107,7 @@ let setupSocket = (socket) => {
       const message = chatInput.value
       if (message.match(/\/giphy/)) {
         let query = message.slice(7).split(" ").join("+")
-        fetch(`http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${query}`)
+        fetch(`https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${query}`)
           .then(res => res.json())
           .then(res => {
             let image = `<img src="${res.data.image_url}" />`
